@@ -80,6 +80,7 @@ namespace Characters
 
         private void OnDestroy()
         {
+            if (AttackingTag == "Enemy") Spawner.AllEnemies.Remove((Enemy)this);
             SetAttackAnimation(false);
             _health.onHealthChanged -= OnHealthChanged;
         }
