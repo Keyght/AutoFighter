@@ -155,7 +155,7 @@ MonoBehaviour:
   _player: {fileID: 1160101957}
   _enemy: {fileID: 4668507968114330898, guid: e7fe7eadebe51fb43a817d202b225fc7, type: 3}
   _boss: {fileID: 1324549281661591959, guid: 86d4ef27f91f45443b10630d823d1fb3, type: 3}
-  _radius: 500
+  _radius: 700
   _spawnTime: 4
 --- !u!4 &358501456
 Transform:
@@ -225,7 +225,7 @@ Camera:
   far clip plane: 10
   field of view: 60
   orthographic: 1
-  orthographic size: 400
+  orthographic size: 450
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

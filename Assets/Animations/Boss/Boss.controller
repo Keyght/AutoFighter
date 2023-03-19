@@ -7,7 +7,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ZombieWalk
+  m_Name: BossWalk
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -21,7 +21,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 7c46a46e04ce55f48bd1b60aaa31499e, type: 2}
+  m_Motion: {fileID: 7400000, guid: c805143130c1a074d8cf3035ced8ccc9, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -89,7 +89,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ZombieIdle
+  m_Name: BossIdle
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -102,7 +102,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: d1586fe454cc93f4cb523c6c412746de, type: 2}
+  m_Motion: {fileID: 7400000, guid: 891c1ea639fbf4549a225c745bc73721, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -211,7 +211,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ZombieAttack
+  m_Name: BossAttack
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -226,7 +226,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: fd6153d116a74c143804052ae536a2d1, type: 2}
+  m_Motion: {fileID: 7400000, guid: a98919708b020854c97781d5db4280cb, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
