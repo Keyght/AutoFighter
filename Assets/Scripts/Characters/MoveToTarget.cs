@@ -1,6 +1,5 @@
-using System;
+using System.Threading;
 using System.Threading.Tasks;
-using UnityEditorInternal;
 using UnityEngine;
 
 namespace Characters
@@ -8,10 +7,11 @@ namespace Characters
     public class MoveToTarget : MonoBehaviour
     {
         [SerializeField] private Transform _body;
-        [SerializeField] private Transform _target;
         [SerializeField] private int _stopRadius;
         [SerializeField] private float _speed;
-        
+
+        private Transform _target;
+        private CancellationTokenSource _cancelTokenSource;
         private static readonly int _walking = Animator.StringToHash("Walking");
 
         public Transform Target
@@ -21,22 +21,24 @@ namespace Characters
 
         private async void Start()
         {
-            Move();
+            _cancelTokenSource = new CancellationTokenSource(); 
+            await Move(_cancelTokenSource.Token);
         }
 
-        private async Task Move()
+        private async Task Move(CancellationToken token)
         {
             var direction = _target.transform.position - transform.position;
-            if (direction.x < 0)
+            Utilits.Flip(_body, direction.x);
+            while (direction.magnitude > _stopRadius && !token.IsCancellationRequested)
             {
-                var scale = _body.localScale;
-                _body.localScale = new Vector3(scale.x * -1, scale.y, scale.z);
-            }
-            while (direction.magnitude > _stopRadius)
-            {
+                direction = _target.transform.position - transform.position;
                 SetWalkAnimation(true);
-                transform.Translate(direction.normalized * 100 * _speed * Time.deltaTime);
+                transform.Translate(direction.normalized * _body.transform.localScale.y * _speed * Time.deltaTime);
                 await Task.Yield();
+            }
+            if (token.IsCancellationRequested)
+            {
+                return;
             }
             SetWalkAnimation(false);
         }
@@ -47,6 +49,13 @@ namespace Characters
             {
                 anim.SetBool(_walking, flag);
             }
+        }
+
+        private void OnDestroy()
+        {
+            SetWalkAnimation(false);
+            _cancelTokenSource.Cancel();
+            _cancelTokenSource.Dispose();
         }
     }
 }
