@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace HP
 {
-    public class HealthCanvas : MonoBehaviour
+    public class HealthCanvas : MonoBehaviour, IHealthChangable
     {
         [SerializeField] private Image _healthBarFilling;
         [SerializeField] private TextMeshProUGUI _healthCount;
@@ -20,7 +20,7 @@ namespace HP
             _health.InvokeChanges();
         }
 
-        private void OnHealthChanged(int currentHealth, float currentHealthAsPercantage)
+        public void OnHealthChanged(int currentHealth, float currentHealthAsPercantage)
         {
             _healthCount.text = currentHealth.ToString();
             _healthCount.color = _gradient.Evaluate(currentHealthAsPercantage);

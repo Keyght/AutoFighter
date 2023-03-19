@@ -1,10 +1,10 @@
-using System;
+using System.Collections.Generic;
 using HP;
 using UnityEngine;
 
 namespace Characters
 {
-    public abstract class Character : MonoBehaviour
+    public abstract class Character : MonoBehaviour, IHealthChangable
     {
         [SerializeField] private int _maxHp;
         [SerializeField] private int _damage;
@@ -12,33 +12,66 @@ namespace Characters
 
         private float _lastAttackTime;
         private Health _health;
-        private Character _target;
+        private List<Character> _targets;
+        protected string AttackingTag;
 
-        public Character Target
-        {
-            get => _target;
-            set => _target = value;
-        }
+        public List<Character> Targets => _targets;
 
         public Health Health => _health;
 
         private void Awake()
         {
+            _targets = new List<Character>();
             _health = new Health(_maxHp);
+        }
+
+        protected void Start()
+        {
+            _health.onHealthChanged += OnHealthChanged;
+        }
+
+        private void OnTriggerEnter2D(Collider2D col)
+        {
+            var enemy = col.GetComponentInParent<Character>();
+            if (enemy.AttackingTag.Equals(AttackingTag)) return;
+            if (!Targets.Contains(enemy)) Targets.Add(enemy);
         }
 
         private void OnTriggerStay2D(Collider2D col)
         {
-            Debug.Log(col.gameObject);
-            if (_target is null) return;
-            if (Time.time < _lastAttackTime + (float) 1/_attackSpeed) return;
-            _lastAttackTime = Time.time;
-            Attack(_target.Health);
+            Attack();
+        }
+        
+        private void OnTriggerExit2D(Collider2D col)
+        {
+            var enemy = col.GetComponentInParent<Character>();
+            if (enemy.AttackingTag.Equals(AttackingTag)) return;
+            if (Targets.Contains(enemy)) Targets.Remove(enemy);
         }
 
-        private void Attack(Health health)
+        private void Attack()
         {
-            health.ChangeHealth(_damage);
+            if (Time.time < _lastAttackTime + (float) 1/_attackSpeed) return;
+            if (Targets.Count == 0) return;
+            _lastAttackTime = Time.time;
+            
+            var currentChar = Targets[0];
+            currentChar.Health.ChangeHealth(_damage);
         }
+
+        public void OnHealthChanged(int currentHealth, float currentHealthAsPercantage)
+        {
+            if (currentHealth == 0)
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        private void OnDestroy()
+        {
+            _health.onHealthChanged -= OnHealthChanged;
+        }
+        
+        
     }
 }
