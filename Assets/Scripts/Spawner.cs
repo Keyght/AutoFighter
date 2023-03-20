@@ -45,7 +45,7 @@ public class Spawner : MonoBehaviour
             }
             var random = new Random();
             var x  = (float) (random.NextDouble() - 0.5) * 2 * _radius;
-            var y = (float) (Math.Abs(x)/x * Math.Sqrt(_radius * _radius - x * x));
+            var y = random.Next(2) == 0 ? (float) (Math.Abs(x)/x * Math.Sqrt(_radius * _radius - x * x)) : (float) Math.Sqrt(_radius * _radius - x * x);
 
             GameObject prefab;
             bool isBoss;
@@ -65,12 +65,7 @@ public class Spawner : MonoBehaviour
             minion.GetComponent<MoveToTarget>().Target = _player;
         }
     }
-    
-    public static void RestartLevel()
-    {
-        Application.LoadLevel(Application.loadedLevel);
-    }
-    
+
     protected void OnDestroy()
     {
         _cancelTokenSource.Cancel();

@@ -8,8 +8,6 @@ namespace Characters
     /// </summary>
     public class Player : Character
     {
-        [SerializeField] private GameObject _endCanvas;
-        
         private bool _isBloodLusted;
         private float _bloodLustValue;
         private float _bloodLustPercent;
@@ -57,7 +55,7 @@ namespace Characters
         protected new void OnDestroy()
         {
             base.OnDestroy();
-            _endCanvas.SetActive(true);
+            EndGame.Instance.GameOver();
         }
     }
 }
