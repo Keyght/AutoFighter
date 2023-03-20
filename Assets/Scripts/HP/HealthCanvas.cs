@@ -20,13 +20,13 @@ namespace HP
             _health.InvokeChanges();
         }
 
-        public void OnHealthChanged(int currentHealth, float currentHealthAsPercantage)
+        public void OnHealthChanged(DamageData damageData)
         {
-            _healthCount.text = currentHealth.ToString();
-            _healthCount.color = _gradient.Evaluate(currentHealthAsPercantage);
+            _healthCount.text = damageData.CurrentHp.ToString();
+            _healthCount.color = _gradient.Evaluate(damageData.CurrentHpAsPercantage);
 
-            _healthBarFilling.fillAmount = currentHealthAsPercantage;
-            _healthBarFilling.color = _gradient.Evaluate(currentHealthAsPercantage);
+            _healthBarFilling.fillAmount = damageData.CurrentHpAsPercantage;
+            _healthBarFilling.color = _gradient.Evaluate(damageData.CurrentHpAsPercantage);
         }
 
         private void OnDestroy()

@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -16,7 +17,7 @@ namespace Skills
             set => _countTime = value;
         }
         
-        public async Task UntilCountdown()
+        public async Task UntilCountdown(CancellationToken token)
         {
             _countFill.fillAmount = 1;
             var timer = _countTime;
@@ -26,6 +27,10 @@ namespace Skills
                 timer -= Time.deltaTime;
                 _countFill.fillAmount = timer / _countTime;
                 await Task.Yield();
+                if (token.IsCancellationRequested)
+                {
+                    return;
+                }
             }
             _timer.ClearMesh();
         }

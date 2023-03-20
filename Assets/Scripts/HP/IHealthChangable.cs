@@ -2,6 +2,6 @@
 {
     public interface IHealthChangable
     {
-        void OnHealthChanged(int currentHealth, float currentHealthAsPercantage);
+        void OnHealthChanged(DamageData damageData);
     }
 }

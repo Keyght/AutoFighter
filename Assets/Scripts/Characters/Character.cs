@@ -4,21 +4,34 @@ using UnityEngine;
 
 namespace Characters
 {
+    public enum AttackingTags
+    {
+        Player,
+        Enemy
+    }
+    
     public abstract class Character : MonoBehaviour, IHealthChangable
     {
-        [SerializeField] private Transform _body;
+        [SerializeField] protected Transform _body;
         [SerializeField] private int _maxHp;
-        [SerializeField] private int _damage;
-        [SerializeField] int _attackSpeed;
+        [SerializeField] protected float _damage;
+        [SerializeField] protected int _attackSpeed;
 
-        private float _lastAttackTime;
+        protected float LastAttackTime;
         private Health _health;
         private List<Character> _targets;
-        protected string AttackingTag;
+        private AttackingTags _attackingTag;
         private static readonly int _attacking = Animator.StringToHash("Attacking");
 
-        public List<Character> Targets => _targets;
+        protected List<Character> Targets => _targets;
         public Health Health => _health;
+        public AttackingTags AttackingTag
+        {
+            get => _attackingTag;
+            set => _attackingTag = value;
+        }
+
+        protected abstract void Attack();
 
         private void Awake()
         {
@@ -38,7 +51,7 @@ namespace Characters
             if (!_targets.Contains(enemy)) _targets.Add(enemy);
         }
 
-        private void OnTriggerStay2D(Collider2D col)
+        protected void OnTriggerStay2D(Collider2D col)
         {
             Attack();
         }
@@ -50,27 +63,15 @@ namespace Characters
             if (_targets.Contains(enemy)) _targets.Remove(enemy);
         }
 
-        private void Attack()
+        public void OnHealthChanged(DamageData damageData)
         {
-            if (Time.time < _lastAttackTime + (float) 1/_attackSpeed) return;
-            if (_targets.Count == 0) return;
-            _lastAttackTime = Time.time;
-            SetAttackAnimation(true);
-            var currentChar = _targets[0];
-            var directionX =  currentChar.transform.position.x - transform.position.x;
-            Utilits.Flip(_body, directionX);
-            currentChar.Health.ChangeHealth(_damage);
-        }
-
-        public void OnHealthChanged(int currentHealth, float currentHealthAsPercantage)
-        {
-            if (currentHealth == 0)
+            if (damageData.CurrentHp == 0)
             {
                 Destroy(gameObject);
             }
         }
-        
-        private void SetAttackAnimation(bool flag)
+
+        protected void SetAttackAnimation(bool flag)
         {
             if (_body.TryGetComponent<Animator>(out var anim))
             {
@@ -78,9 +79,9 @@ namespace Characters
             }
         }
 
-        private void OnDestroy()
+        protected void OnDestroy()
         {
-            if (AttackingTag == "Enemy") Spawner.AllEnemies.Remove((Enemy)this);
+            
             SetAttackAnimation(false);
             _health.onHealthChanged -= OnHealthChanged;
         }

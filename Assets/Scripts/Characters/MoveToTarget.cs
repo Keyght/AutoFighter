@@ -1,5 +1,7 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Characters
@@ -27,20 +29,29 @@ namespace Characters
 
         private async Task Move(CancellationToken token)
         {
-            var direction = _target.transform.position - transform.position;
-            Utilits.Flip(_body, direction.x);
-            while (direction.magnitude > _stopRadius && !token.IsCancellationRequested)
+            try
             {
-                direction = _target.transform.position - transform.position;
-                SetWalkAnimation(true);
-                transform.Translate(direction.normalized * _body.transform.localScale.y * _speed * Time.deltaTime);
-                await Task.Yield();
+                var direction = _target.transform.position - transform.position;
+                Utilits.Flip(_body, direction.x);
+                while (direction.magnitude > _stopRadius && !token.IsCancellationRequested)
+                {
+                    direction = _target.transform.position - transform.position;
+                    SetWalkAnimation(true);
+                    transform.Translate(direction.normalized * _body.transform.localScale.y * _speed * Time.deltaTime);
+                    await Task.Yield();
+                }
+
+                if (token.IsCancellationRequested)
+                {
+                    return;
+                }
+
+                SetWalkAnimation(false);
             }
-            if (token.IsCancellationRequested)
+            catch (NullReferenceException e)
             {
-                return;
+                Debug.Log(e.Message);
             }
-            SetWalkAnimation(false);
         }
 
         private void SetWalkAnimation(bool flag)

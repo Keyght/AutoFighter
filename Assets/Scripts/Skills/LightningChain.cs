@@ -24,6 +24,7 @@ namespace Skills
 
         protected override async Task PerformSpell()
         {
+            _alreadyBeen.Clear();
             await TickEnemies();
         }
 
@@ -35,16 +36,16 @@ namespace Skills
             {
                 var targetsInRange = Spawner.AllEnemies.Where(character => (character.transform.position - currentTickTransform.position).magnitude <= _range).ToList();
                 if (targetsInRange.Count == 0) return Task.CompletedTask;
-
+                
                 while (targetsInRange.Count > 0)
                 {
                     var next = random.Next(targetsInRange.Count);
                     var nextChar = targetsInRange[next];
                     if (!_alreadyBeen.Contains(nextChar))
                     {
-                        Debug.Log(nextChar.gameObject.GetInstanceID() + " " + nextChar.Health.CurrentHp);
                         nextChar.Health.ChangeHealth(_damage);
                         _alreadyBeen.Add(nextChar);
+                        currentTickTransform = nextChar.transform;
                         break;
                     }
                     targetsInRange.Remove(nextChar);

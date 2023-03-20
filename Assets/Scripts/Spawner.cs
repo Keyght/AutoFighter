@@ -13,6 +13,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] private GameObject _boss;
     [SerializeField] private float _radius;
     [SerializeField] private float _spawnTime;
+    [SerializeField] private int _bossProbability;
 
     private CancellationTokenSource _cancelTokenSource;
     
@@ -20,10 +21,14 @@ public class Spawner : MonoBehaviour
 
     public static List<Enemy> AllEnemies => _allEnemies;
 
-    private async void Start()
+    private void Awake()
     {
         _allEnemies = new List<Enemy>();
         _cancelTokenSource = new CancellationTokenSource();
+    }
+
+    private async void Start()
+    {
         await Spawn(_cancelTokenSource.Token);
     }
 
@@ -45,14 +50,31 @@ public class Spawner : MonoBehaviour
             var x  = (float) (random.NextDouble() - 0.5) * 2 * _radius;
             var y = (float) (Math.Abs(x)/x * Math.Sqrt(_radius * _radius - x * x));
 
-            var prefab = random.NextDouble() * 100 < 10 ? _boss : _enemy;
+            GameObject prefab;
+            bool isBoss;
+            if (random.NextDouble() * 100 < _bossProbability)
+            {
+                prefab = _boss;
+                isBoss = true;
+            }
+            else
+            {
+                prefab = _enemy;
+                isBoss = false;
+            }
+            
             var minion = Instantiate(prefab, new Vector3(x, y, 0), Quaternion.identity);
-            AllEnemies.Add(minion.GetComponent<Enemy>());
+            minion.GetComponent<Enemy>().IsBoss = isBoss;
             minion.GetComponent<MoveToTarget>().Target = _player;
         }
     }
     
-    private void OnDestroy()
+    public static void RestartLevel()
+    {
+        Application.LoadLevel(Application.loadedLevel);
+    }
+    
+    protected void OnDestroy()
     {
         _cancelTokenSource.Cancel();
         _cancelTokenSource.Dispose();

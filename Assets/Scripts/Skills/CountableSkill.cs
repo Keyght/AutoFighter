@@ -1,3 +1,5 @@
+using System;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,10 +12,12 @@ namespace Skills
         [SerializeField] private float _countdownTime;
         [SerializeField] private Countdown _countdown;
 
+        private CancellationTokenSource _cancellationTokenSource;
         protected abstract Task PerformSpell();
-        
+
         private void Start()
         {
+            _cancellationTokenSource = new CancellationTokenSource();
             _countdown.CountTime = _countdownTime;
             _button.onClick.AddListener(OnClickButton);
         }
@@ -22,8 +26,14 @@ namespace Skills
         {
             _button.interactable = false;
             PerformSpell();
-            await _countdown.UntilCountdown();
+            await _countdown.UntilCountdown(_cancellationTokenSource.Token);
             _button.interactable = true;
+        }
+
+        private void OnDestroy()
+        {
+            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource.Dispose();
         }
     }
 }

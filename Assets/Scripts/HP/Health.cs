@@ -4,12 +4,13 @@ namespace HP
 {
     public class Health
     {
-        public event Action<int, float> onHealthChanged;
+        public event Action<DamageData> onHealthChanged;
 
         private readonly int _maxHp;
-        private int _currentHp;
+        private float _currentHp;
 
-        public int CurrentHp => _currentHp;
+        public int MaxHp => _maxHp;
+        public float CurrentHp => _currentHp;
 
         public Health(int maxHp)
         {
@@ -17,7 +18,7 @@ namespace HP
             _currentHp = maxHp;
         }
 
-        public void ChangeHealth(int value)
+        public void ChangeHealth(float value)
         {
             _currentHp += value;
             
@@ -35,8 +36,8 @@ namespace HP
 
         public void InvokeChanges()
         {
-            var currentHealthAsPercantage = (float) _currentHp / _maxHp;
-            onHealthChanged?.Invoke(_currentHp, currentHealthAsPercantage);
+            var currentHealthAsPercantage =  _currentHp / _maxHp;
+            onHealthChanged?.Invoke(new DamageData(_currentHp, currentHealthAsPercantage));
         }
     }
 }
