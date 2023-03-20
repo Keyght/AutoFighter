@@ -16,14 +16,9 @@ public class Spawner : MonoBehaviour
     [SerializeField] private int _bossProbability;
 
     private CancellationTokenSource _cancelTokenSource;
-    
-    private static List<Enemy> _allEnemies;
-
-    public static List<Enemy> AllEnemies => _allEnemies;
 
     private void Awake()
     {
-        _allEnemies = new List<Enemy>();
         _cancelTokenSource = new CancellationTokenSource();
     }
 

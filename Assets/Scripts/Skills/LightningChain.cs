@@ -34,7 +34,7 @@ namespace Skills
             var currentTickTransform = _player.transform;
             for (var i = 0; i < _spellTicks; i++)
             {
-                var targetsInRange = Spawner.AllEnemies.Where(character => (character.transform.position - currentTickTransform.position).magnitude <= _range).ToList();
+                var targetsInRange = Utilits.AllEnemies.Where(character => (character.transform.position - currentTickTransform.position).magnitude <= _range).ToList();
                 if (targetsInRange.Count == 0) return Task.CompletedTask;
                 
                 while (targetsInRange.Count > 0)

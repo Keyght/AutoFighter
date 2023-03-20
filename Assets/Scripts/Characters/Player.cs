@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Characters
@@ -20,16 +20,23 @@ namespace Characters
             set => _bloodLustPercent = value;
         }
 
+        private new void Awake()
+        {
+            base.Awake();
+            Utilits.AllEnemies = new List<Enemy>();
+        }
+        
         private new void Start()
         {
             base.Start();
             AttackingTag = AttackingTags.Player;
         }
 
-        protected override void Attack()
+        protected override void Attack(Collider2D col)
         {
             if (Time.time < LastAttackTime + (float) 1/_attackSpeed) return;
             if (Targets.Count == 0) return;
+            if (col.gameObject.GetComponentInParent<Character>() != Targets[0]) return;
             LastAttackTime = Time.time;
             SetAttackAnimation(true);
             var currentChar = Targets[0];

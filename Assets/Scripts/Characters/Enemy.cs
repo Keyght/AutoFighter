@@ -4,7 +4,7 @@ namespace Characters
 {
     public class Enemy : Character
     {
-        private bool _isBoss;
+        [SerializeField] private bool _isBoss;
 
         public bool IsBoss
         {
@@ -15,14 +15,15 @@ namespace Characters
         private new void Start()
         {
             base.Start();
-            Spawner.AllEnemies.Add(this);
+            Utilits.AllEnemies.Add(this);
             AttackingTag = AttackingTags.Enemy;
         }
 
-        protected override void Attack()
+        protected override void Attack(Collider2D col)
         {
             if (Time.time < LastAttackTime + (float) 1/_attackSpeed) return;
             if (Targets.Count == 0) return;
+            if (col.GetComponentInParent<Character>() != Targets[0]) return;
             LastAttackTime = Time.time;
             SetAttackAnimation(true);
             var currentChar = Targets[0];
@@ -34,7 +35,7 @@ namespace Characters
         protected new void OnDestroy()
         {
             base.OnDestroy();
-            Spawner.AllEnemies.Remove((Enemy)this);
+            Utilits.AllEnemies.Remove(this);
         }
     }
 }

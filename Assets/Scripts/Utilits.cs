@@ -1,8 +1,12 @@
 
+using System.Collections.Generic;
+using Characters;
 using UnityEngine;
 
 public static class Utilits
 {
+    public static List<Enemy> AllEnemies;
+    
     public static void Flip(Transform toFlip, float directionXPos)
     {
         var scale = toFlip.localScale;

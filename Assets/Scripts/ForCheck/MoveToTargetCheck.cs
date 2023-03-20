@@ -3,15 +3,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Characters
+namespace ForCheck
 {
-    public class MoveToTarget : MonoBehaviour
+    public class MoveToTargetCheck : MonoBehaviour
     {
         [SerializeField] private Transform _body;
         [SerializeField] private int _stopRadius;
         [SerializeField] private float _speed;
 
-        private Transform _target;
+        [SerializeField] private Transform _target;
         private CancellationTokenSource _cancelTokenSource;
         private static readonly int _walking = Animator.StringToHash("Walking");
 
@@ -30,13 +30,13 @@ namespace Characters
         private async void Start()
         {
             _cancelTokenSource = new CancellationTokenSource(); 
-            await Move(_cancelTokenSource.Token);
+            //await Move(_cancelTokenSource.Token);
         }
 
         public async Task Move(CancellationToken token)
         {
             try
-            {
+            {   
                 var direction = _target.transform.position - transform.position;
                 Utilits.Flip(_body, direction.x);
                 while (direction.magnitude > _stopRadius && !token.IsCancellationRequested)

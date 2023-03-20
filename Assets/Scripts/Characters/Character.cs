@@ -23,7 +23,7 @@ namespace Characters
         private AttackingTags _attackingTag;
         private static readonly int _attacking = Animator.StringToHash("Attacking");
 
-        protected List<Character> Targets => _targets;
+        public List<Character> Targets => _targets;
         public Health Health => _health;
         public AttackingTags AttackingTag
         {
@@ -31,9 +31,9 @@ namespace Characters
             set => _attackingTag = value;
         }
 
-        protected abstract void Attack();
+        protected abstract void Attack(Collider2D col);
 
-        private void Awake()
+        protected void Awake()
         {
             _health = new Health(_maxHp);
         }
@@ -53,7 +53,7 @@ namespace Characters
 
         protected void OnTriggerStay2D(Collider2D col)
         {
-            Attack();
+            Attack(col);
         }
         
         private void OnTriggerExit2D(Collider2D col)
@@ -85,7 +85,5 @@ namespace Characters
             SetAttackAnimation(false);
             _health.onHealthChanged -= OnHealthChanged;
         }
-        
-       
     }
 }

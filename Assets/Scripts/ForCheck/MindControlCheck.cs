@@ -1,13 +1,13 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Characters;
+using Skills;
 using UnityEngine;
 
-namespace Skills
+namespace ForCheck
 {
-    public class MindControl : CountableSkill
+    public class MindControlCheck : CountableSkill
     {
         [SerializeField] private float _skillDuration;
 
@@ -28,13 +28,12 @@ namespace Skills
             list.AddRange(Utilits.AllEnemies.Where(enemy => enemy != controlledEnemy));
             if (list.Count == 0) return;
 
-
             controlledEnemy.AttackingTag = AttackingTags.Player;
-            var moveComponent = controlledEnemy.GetComponent<MoveToTarget>();
+            var moveComponent = controlledEnemy.GetComponent<MoveToTargetCheck>();
             var player = moveComponent.Target.GetComponent<Player>();
             if (player.Targets.Contains(controlledEnemy)) player.Targets.Remove(controlledEnemy);
             var first = true;
-
+            
             var timer = _skillDuration;
             while (timer > 0)
             {
@@ -48,7 +47,7 @@ namespace Skills
                 }
                 await Task.Yield();
             }
-
+            
             moveComponent.CancellationTokenSource.Cancel();
             await Task.Delay(100);
             moveComponent.CancellationTokenSource.Dispose();
