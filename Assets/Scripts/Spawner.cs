@@ -1,11 +1,13 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Characters;
 using UnityEngine;
 using Random = System.Random;
 
+/// <summary>
+/// Класс для создания врагов и направления их к игроку
+/// </summary>
 public class Spawner : MonoBehaviour
 {
     [SerializeField] private Transform _player;

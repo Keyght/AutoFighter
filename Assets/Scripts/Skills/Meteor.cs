@@ -5,6 +5,9 @@ using Random = System.Random;
 
 namespace Skills
 {
+    /// <summary>
+    /// Класс для реализации метеорита
+    /// </summary>
     public class Meteor : CountableSkill
     {
         [SerializeField] private GameObject _meteor;

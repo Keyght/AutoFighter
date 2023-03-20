@@ -1,9 +1,11 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using Characters;
 using UnityEngine;
 
+/// <summary>
+/// Статический класс, в котором содержатся общие методы и свойства
+/// </summary>
 public static class Utilits
 {
     public static List<Enemy> AllEnemies;

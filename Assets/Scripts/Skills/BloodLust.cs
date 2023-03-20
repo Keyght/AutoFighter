@@ -4,6 +4,9 @@ using UnityEngine.UI;
 
 namespace Skills
 {
+    /// <summary>
+    /// Класс для реализации жажды крови
+    /// </summary>
     public class BloodLust : MonoBehaviour
     {
         [SerializeField] private Button _button;

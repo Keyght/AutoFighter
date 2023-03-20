@@ -7,6 +7,9 @@ using Random = System.Random;
 
 namespace Skills
 {
+    /// <summary>
+    /// Класс для реализации цепной молнии
+    /// </summary>
     public class LightningChain : CountableSkill
     {
         [SerializeField] private Character _player;

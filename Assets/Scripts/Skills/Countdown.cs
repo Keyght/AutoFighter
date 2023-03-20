@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 namespace Skills
 {
+    /// <summary>
+    /// Класс для реализации перезарядки
+    /// </summary>
     public class Countdown : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI _timer;

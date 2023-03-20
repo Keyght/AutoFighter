@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 namespace Skills
 {
+    /// <summary>
+    /// Класс для реализации всех скилов с перезарядкой
+    /// </summary>
     public abstract class CountableSkill : MonoBehaviour
     {
         [SerializeField] private Button _button;

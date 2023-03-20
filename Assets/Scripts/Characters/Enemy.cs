@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace Characters
 {
+    /// <summary>
+    /// Класс для описания врагов
+    /// </summary>
     public class Enemy : Character
     {
         [SerializeField] private bool _isBoss;

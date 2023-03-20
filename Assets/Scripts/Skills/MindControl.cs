@@ -1,14 +1,14 @@
-using System;
-using System.Collections.Generic;
+
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Characters;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Skills
 {
+    /// <summary>
+    /// Класс для реализации контроля разума
+    /// </summary>
     public class MindControl : CountableSkill
     {
         [SerializeField] private float _skillDuration;

@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace Characters
 {
+    /// <summary>
+    /// Класс для непрерывного двеижения объекта к цели
+    /// </summary>
     public class MoveToTarget : MonoBehaviour
     {
         [SerializeField] private Transform _body;

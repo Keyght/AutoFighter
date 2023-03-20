@@ -2,6 +2,9 @@ using System;
 
 namespace HP
 {
+    /// <summary>
+    /// Класс для управления здоровьем
+    /// </summary>
     public class Health
     {
         public event Action<DamageData> onHealthChanged;

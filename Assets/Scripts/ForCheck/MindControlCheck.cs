@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Characters;
 using Skills;
@@ -7,6 +6,9 @@ using UnityEngine;
 
 namespace ForCheck
 {
+    /// <summary>
+    /// Класс для работоспособности тестовой сцены
+    /// </summary>
     public class MindControlCheck : CountableSkill
     {
         [SerializeField] private float _skillDuration;

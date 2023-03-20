@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Characters
 {
+    /// <summary>
+    /// Класс для описания игрока
+    /// </summary>
     public class Player : Character
     {
         [SerializeField] private GameObject _endCanvas;

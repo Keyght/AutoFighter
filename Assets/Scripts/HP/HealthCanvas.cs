@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 namespace HP
 {
+    /// <summary>
+    /// Класс для управления индикатором здоровья
+    /// </summary>
     public class HealthCanvas : MonoBehaviour, IHealthChangable
     {
         [SerializeField] private Image _healthBarFilling;

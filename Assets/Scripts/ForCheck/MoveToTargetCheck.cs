@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace ForCheck
 {
+    /// <summary>
+    /// Класс для роботоспостобности движения к цели в тестовых сценах
+    /// </summary>
     public class MoveToTargetCheck : MonoBehaviour
     {
         [SerializeField] private Transform _body;

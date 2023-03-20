@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace Skills
 {
+    /// <summary>
+    /// Класс для описания поведения метеорита
+    /// </summary>
     public class MeteorObject : MonoBehaviour
     {
         [SerializeField] private GameObject _bang;

@@ -4,12 +4,9 @@ using UnityEngine;
 
 namespace Characters
 {
-    public enum AttackingTags
-    {
-        Player,
-        Enemy
-    }
-    
+    /// <summary>
+    /// Базовый класс для всех персонажей, которые могут атаковать и имеют здоровье
+    /// </summary>
     public abstract class Character : MonoBehaviour, IHealthChangable
     {
         [SerializeField] protected Transform _body;
