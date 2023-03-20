@@ -27,7 +27,7 @@ namespace ForCheck
             set => _target = value;
         }
 
-        private async void Start()
+        private void Start()
         {
             _cancelTokenSource = new CancellationTokenSource(); 
             //await Move(_cancelTokenSource.Token);
@@ -68,6 +68,14 @@ namespace ForCheck
             {
                 anim.SetBool(_walking, flag);
             }
+        }
+        public async Task ReMove()
+        {
+            CancellationTokenSource.Cancel();
+            await Task.Delay(100);
+            CancellationTokenSource.Dispose();
+            CancellationTokenSource = new CancellationTokenSource();
+            await Move(CancellationTokenSource.Token);
         }
 
         private void OnDestroy()

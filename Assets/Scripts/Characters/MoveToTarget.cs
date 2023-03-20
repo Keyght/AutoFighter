@@ -15,6 +15,7 @@ namespace Characters
         private CancellationTokenSource _cancelTokenSource;
         private static readonly int _walking = Animator.StringToHash("Walking");
 
+        public int StopRadius => _stopRadius;
         public CancellationTokenSource CancellationTokenSource
         {
             get => _cancelTokenSource;
@@ -29,11 +30,12 @@ namespace Characters
 
         private async void Start()
         {
+            GetComponent<CircleCollider2D>().radius = _stopRadius;
             _cancelTokenSource = new CancellationTokenSource(); 
-            await Move(_cancelTokenSource.Token);
+            Move(_cancelTokenSource.Token);
         }
 
-        public async Task<bool> Move(CancellationToken token)
+        public async Task Move(CancellationToken token) 
         {
             try
             {
@@ -49,18 +51,29 @@ namespace Characters
 
                 if (token.IsCancellationRequested)
                 {
-                    return false;
+                    return;
                 }
 
                 SetWalkAnimation(false);
+                if (Target.TryGetComponent<MoveToTarget>(out var moveComponent))
+                {
+                    moveComponent.Target = transform;
+                }
             }
             catch (Exception e)
             {
                 Debug.Log(e.Message);
                 SetWalkAnimation(false);
             }
+        }
 
-            return true;
+        public async Task ReMove()
+        {
+            CancellationTokenSource.Cancel();
+            await Task.Delay(100);
+            CancellationTokenSource.Dispose();
+            CancellationTokenSource = new CancellationTokenSource();
+            await Move(CancellationTokenSource.Token);
         }
 
         private void SetWalkAnimation(bool flag)

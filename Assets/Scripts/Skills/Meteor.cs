@@ -21,8 +21,8 @@ namespace Skills
         {
             var random = new Random();
 
-            var x = (float) (random.NextDouble() - 0.5) * 1500;
-            var y = (float) (random.NextDouble() - 0.5) * 1500;
+            var x = (float) (random.NextDouble() - 0.5) * 1000;
+            var y = (float) (random.NextDouble() - 0.5) * 1000;
             var meteorPos = new Vector3(x, y, 0);
             
 

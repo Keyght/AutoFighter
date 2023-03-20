@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Characters;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Skills
@@ -28,36 +30,33 @@ namespace Skills
             list.AddRange(Utilits.AllEnemies.Where(enemy => enemy != controlledEnemy));
             if (list.Count == 0) return;
 
-
             controlledEnemy.AttackingTag = AttackingTags.Player;
             var moveComponent = controlledEnemy.GetComponent<MoveToTarget>();
             var player = moveComponent.Target.GetComponent<Player>();
             if (player.Targets.Contains(controlledEnemy)) player.Targets.Remove(controlledEnemy);
-            var first = true;
+            next = random.Next(list.Count);
+            moveComponent.Target = list[next].transform;
+            var targetMove = moveComponent.Target.GetComponent<MoveToTarget>();
+            moveComponent.Move(moveComponent.CancellationTokenSource.Token);
 
             var timer = _skillDuration;
             while (timer > 0)
             {
+                //if (moveComponent.CancellationTokenSource.Token.IsCancellationRequested) break;                
                 timer -= Time.deltaTime;
-                if (!moveComponent.Target.GetComponent<Character>().isActiveAndEnabled || first)
-                {
-                    first = false;
-                    next = random.Next(list.Count);
-                    moveComponent.Target = list[next].transform;
-                    moveComponent.Move(moveComponent.CancellationTokenSource.Token);
-                }
                 await Task.Yield();
             }
 
-            moveComponent.CancellationTokenSource.Cancel();
-            await Task.Delay(100);
-            moveComponent.CancellationTokenSource.Dispose();
-            moveComponent.CancellationTokenSource = new CancellationTokenSource();
+            if (targetMove is not null)
+            {
+                targetMove.Target = player.transform;
+                targetMove.ReMove();
+            }
             foreach (var enemy in Utilits.AllEnemies.Where(enemy => enemy.Targets.Contains(controlledEnemy))) enemy.Targets.Remove(controlledEnemy);
             if ((controlledEnemy.transform.position - player.transform.position).magnitude < player.GetComponent<CircleCollider2D>().radius) player.Targets.Add(controlledEnemy);
             moveComponent.Target = player.transform;
             controlledEnemy.AttackingTag = AttackingTags.Enemy;
-            await moveComponent.Move(moveComponent.CancellationTokenSource.Token);
+            await moveComponent.ReMove();
         }
     }
 }
