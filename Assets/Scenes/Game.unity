@@ -479,6 +479,7 @@ GameObject:
   - component: {fileID: 248006981}
   - component: {fileID: 248006983}
   - component: {fileID: 248006982}
+  - component: {fileID: 248006984}
   m_Layer: 5
   m_Name: MeteorButton
   m_TagString: Untagged
@@ -589,6 +590,25 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &248006984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 248006978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70f900dcf0bfa554c885db93cca73407, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 248006982}
+  _countdownTime: 15
+  _countdown: {fileID: 1679217542}
+  _meteor: {fileID: 8696044137983266071, guid: 982eb6fa2376f084a9185901e569fc38, type: 3}
+  _baseDamage: -100
+  _bangRadius: 300
+  _fallTime: 4
 --- !u!1 &294587312
 GameObject:
   m_ObjectHideFlags: 0
@@ -2457,6 +2477,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ed7983312fb0b942a921f8b3a0cc898, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1679217542 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1685755571433369090, guid: d74366513eaaa4445950b45ad8424b92, type: 3}
+  m_PrefabInstance: {fileID: 213669541}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2727a0dac11d9e84c88ac36efcdb72a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1718698327

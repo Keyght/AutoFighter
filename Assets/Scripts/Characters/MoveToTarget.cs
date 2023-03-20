@@ -33,7 +33,7 @@ namespace Characters
             await Move(_cancelTokenSource.Token);
         }
 
-        public async Task Move(CancellationToken token)
+        public async Task<bool> Move(CancellationToken token)
         {
             try
             {
@@ -49,17 +49,18 @@ namespace Characters
 
                 if (token.IsCancellationRequested)
                 {
-                    return;
+                    return false;
                 }
 
                 SetWalkAnimation(false);
-                await Task.Yield();
             }
             catch (Exception e)
             {
                 Debug.Log(e.Message);
                 SetWalkAnimation(false);
             }
+
+            return true;
         }
 
         private void SetWalkAnimation(bool flag)
