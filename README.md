@@ -14,9 +14,9 @@
 ## Play on different devices
 
 <p float="left">
- <img src="https://user-images.githubusercontent.com/61432612/226407109-c9c1b683-4991-490a-b00b-fdb7177b8ef6.png" width="1000" height="500">
- <img src="https://user-images.githubusercontent.com/61432612/226406753-1930f66a-7065-4f60-a709-353389c4c080.jpg" width="500" height="235">
- <img src="https://user-images.githubusercontent.com/61432612/226406761-4a705e94-6c9b-434b-95bb-79c0cdba42aa.jpg" width="500" height="210">
+ <img src="https://user-images.githubusercontent.com/61432612/226407109-c9c1b683-4991-490a-b00b-fdb7177b8ef6.png" width="900" height="500">
+ <img src="https://user-images.githubusercontent.com/61432612/226406753-1930f66a-7065-4f60-a709-353389c4c080.jpg" width="450" height="235">
+ <img src="https://user-images.githubusercontent.com/61432612/226406761-4a705e94-6c9b-434b-95bb-79c0cdba42aa.jpg" width="450" height="180">
 </p>
 
 # Tech
